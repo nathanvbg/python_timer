@@ -3,29 +3,31 @@ import time
 
 def main():
 	print("How long should the timer last ?")
-	total_sec = int(input())
+	count = int(input())
 	pygame.init()
 	screen = pygame.display.set_mode((800, 800))
 	
-	#clock = pygame.time.Clock()
-	#print(clock)
+	clock = pygame.time.Clock()
+	print(clock)
 	time_init = 0
 	running = True
-	t = 3
-	while (running and total_sec > 0):
-		time.sleep(1)
-
-		for event in pygame.event.get():
-			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_ESCAPE:
+	event = pygame.USEREVENT #custom event creation with ID 24
+	pygame.time.set_timer(event, 1000)
+	while running:
+		for e in pygame.event.get():
+			if e.type == event:
+				print(count)
+				count -= 1
+				if count == -1:
+					running = False
+				#print(int(pygame.time.get_ticks() / 1000))
+			if e.type == pygame.KEYDOWN:
+				if e.key == pygame.K_ESCAPE:
 					pygame.quit()
 					running = False
-			elif event.type == pygame.QUIT:
+			elif e.type == pygame.QUIT:
 					pygame.quit()
 					running = False
-			print(pygame.time.get_ticks())
-			if(pygame.time.get_ticks() > time * 1000):
-				print('finiiii')
 
 if __name__ == "__main__":
 	main()
